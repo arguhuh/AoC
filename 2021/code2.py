@@ -1,7 +1,7 @@
 from math import prod
 
-# infile = open("in2_test.txt","r")
-infile = open("in2_real.txt","r")
+infile = open("in2_test.txt","r")
+# infile = open("in2_real.txt","r")
 L = [line.split() for line in infile.readlines()]
 L2 = [[p[0],int(p[1])] for p in L]
 
