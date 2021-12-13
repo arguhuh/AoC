@@ -1,7 +1,7 @@
-infile = open("in12_real.txt","r")
-# infile = open("in12_test.txt","r")
-# infile = open("in12_test2.txt","r")
-# infile = open("in12_test3.txt","r")
+infile = open("input/in12_real.txt","r")
+# infile = open("input/in12_test.txt","r")
+# infile = open("input/in12_test2.txt","r")
+# infile = open("input/in12_test3.txt","r")
 L = [line.strip().split('-') for line in infile.readlines()]
 
 def find_paths1(L,pos,visited,ind):

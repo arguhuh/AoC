@@ -1,5 +1,5 @@
-infile = open("in13_real.txt","r")
-# infile = open("in13_test.txt","r")
+infile = open("input/in13_real.txt","r")
+# infile = open("input/in13_test.txt","r")
 points = []
 for line in infile:
 	if len(line.strip()) == 0:

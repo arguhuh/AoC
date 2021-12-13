@@ -1,11 +1,11 @@
 from math import prod
 
-infile = open("in2_test.txt","r")
-# infile = open("in2_real.txt","r")
+infile = open("input/in02_test.txt","r")
+# infile = open("input/in02_real.txt","r")
 L = [line.split() for line in infile.readlines()]
 L2 = [[p[0],int(p[1])] for p in L]
 
-def day2_part1(L):
+def day02_part1(L):
     pos = [0, 0]
     for inst in L:
         if inst[0] == 'forward':
@@ -19,7 +19,7 @@ def day2_part1(L):
             return None
     return prod(pos)
 
-def day2_part2(L):
+def day02_part2(L):
     pos = [0, 0]
     aim = 0
     for inst in L:
@@ -35,5 +35,5 @@ def day2_part2(L):
             return None
     return prod(pos)
 
-print(day2_part1(L2))
-print(day2_part2(L2))
+print(day02_part1(L2))
+print(day02_part2(L2))

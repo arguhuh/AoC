@@ -1,10 +1,10 @@
 import random,math,itertools
 
-infile = open("in9_real.txt","r")
-# infile = open("in9_test.txt","r")
+infile = open("input/in09_real.txt","r")
+# infile = open("input/in09_test.txt","r")
 L = [[int(i) for i in list(line.strip())] for line in infile.readlines()] #L[i][j] is j-th height in the i-th line
 
-def day9_part1(L):
+def day09_part1(L):
 	N = len(L[0])
 	return sum([sum([t[0]+1 for t in
 		zip(C,C[1:]+[float("inf")],[float("inf")]+C[:-1],D,U) if t[0] < min(t[1:])])
@@ -28,7 +28,7 @@ def walk(L,M,i,j):
 		j = jj
 	return (i,j)
 
-def day9_part2(L):
+def day09_part2(L):
 	Ni = len(L)
 	Nj = len(L[0])
 	M = [[t[0] < min(t[1:]) for t in
@@ -46,7 +46,7 @@ def day9_part2(L):
 	return math.prod(sorted(basins)[-3:])
 
 
-def day9_part2_test(L):
+def day09_part2_test(L):
 	Ni = len(L)
 	Nj = len(L[0])
 	M = [[t[0] < min(t[1:]) for t in
@@ -77,7 +77,7 @@ def day9_part2_test(L):
 	return math.prod(sorted(basins)[-3:])
 
 
-def day9_part2_test2(L):
+def day09_part2_test2(L):
 	Ni = len(L)
 	Nj = len(L[0])
 	M = [[t[0] < min(t[1:]) for t in
@@ -106,7 +106,7 @@ def day9_part2_test2(L):
 	return math.prod(sorted(basins)[-3:])
 
 
-def day9_part2_flood(L):
+def day09_part2_flood(L):
 	Ni = len(L)
 	Nj = len(L[0])
 	minima = [(i,j) for i,(C,D,U) in \
@@ -128,8 +128,8 @@ def day9_part2_flood(L):
 	return math.prod(sorted(basins)[-3:])
 
 
-# print(day9_part1(L))
-print(day9_part2(L))
-# print(day9_part2_test(L))
-# print(day9_part2_test2(L))
-print(day9_part2_flood(L))
+# print(day09_part1(L))
+print(day09_part2(L))
+# print(day09_part2_test(L))
+# print(day09_part2_test2(L))
+print(day09_part2_flood(L))

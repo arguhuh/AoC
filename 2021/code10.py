@@ -1,5 +1,5 @@
-infile = open("in10_real.txt","r")
-# infile = open("in10_test.txt","r")
+infile = open("input/in10_real.txt","r")
+# infile = open("input/in10_test.txt","r")
 L = [[c for c in line.strip()] for line in infile.readlines()]
 
 def first_illegal(s):
