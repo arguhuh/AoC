@@ -16,7 +16,8 @@ for line in infile:
 def day4_part1(order,boards):
 	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]
 	q = min(enumerate([min([max([inv_order[i] for i in row]) for row in board + list(zip(*board))]) for board in boards]), key = lambda p: p[1])
-	return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
+	# return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
+	return sum([i for row in boards[q[0]] for i in row if inv_order[i] > q[1]]) * order[q[1]] #also make sum_board a function
 
 def day4_part2(order,boards):
 	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]

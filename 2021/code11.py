@@ -28,13 +28,14 @@ def day11_part1(L,Nsteps):
 	return Nflash
 
 def day11_part2(L):
-	istep = 0
-	while sum([elm for row in L for elm in row]):
+	istep = 1
+	while step(L) != 100:
 		istep += 1
-		step(L)
 	return istep
 
-# print("number of flashes: "+str(day11_part1(L,100)))
+print(day11_part1(L[:],100))
+print(day11_part2(L[:]))
+
+# day11_part1(L,100)
 # for row in L:
 	# print(''.join([str(i) for i in row]))
-print(day11_part2(L))

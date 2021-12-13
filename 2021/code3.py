@@ -6,8 +6,8 @@ def day3_part1(L):
     L_gamma = ['1' if sum(t) > len(L)//2 else '0' for t in zip(*L)]
     gamma = int(''.join(L_gamma),2)
     epsilon = 2**len(L_gamma) - 1 - gamma
-    PC = gamma*epsilon
-    return PC
+    # PC = gamma*epsilon
+    return gamma*epsilon
 
 def O_iter(L,b):
     if len(L) == 1:
