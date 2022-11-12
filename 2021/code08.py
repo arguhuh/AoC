@@ -1,8 +1,8 @@
-infile = open("in8_real.txt","r")
-# infile = open("in8_test.txt","r")
+infile = open("input/in08_real.txt","r")
+# infile = open("input/in08_test.txt","r")
 L = infile.readlines()
 
-def day8_part1(L):
+def day08_part1(L):
 	return sum([sum([1 for s in line.split('|')[1].strip().split() if len(s) < 5 or len(s) == 7]) for line in L])
 
 #e is the one that appears in 4 digits
@@ -13,7 +13,7 @@ def day8_part1(L):
 #d is the other one that appears in the digit with 4 segments
 #g is the only remaining one
 
-def day8_part2(L):
+def day08_part2(L):
 	cv = "abcdefg"
 	ss = {
 		"abcefg": '0',
@@ -46,5 +46,5 @@ def day8_part2(L):
 		T += int(''.join([ss[''.join(sorted(d))] for d in correct_digits]))
 	return T
 
-print(day8_part1(L))
-print(day8_part2(L))
+print(day08_part1(L))
+print(day08_part2(L))

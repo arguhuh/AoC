@@ -1,5 +1,5 @@
-infile = open("in11_real.txt","r")
-# infile = open("in11_test.txt","r")
+infile = open("input/in11_real.txt","r")
+# infile = open("input/in11_test.txt","r")
 L = [[int(i) for i in line.strip()] for line in infile.readlines()]
 
 def step(L):

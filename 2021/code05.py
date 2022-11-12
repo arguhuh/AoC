@@ -1,10 +1,10 @@
 import re
 
-infile = open("in5_real.txt","r")
-# infile = open("in5_test.txt","r")
+infile = open("input/in05_real.txt","r")
+# infile = open("input/in05_test.txt","r")
 L = [[int(i) for i in re.split(',| -> ',line.strip())] for line in infile.readlines()]
 
-def day5_part1(L):
+def day05_part1(L):
 	N = max([max(line) for line in L]) + 1 #len of grid
 	G = [[0] * N for i in range(N)] #because mutability
 	for line in L:
@@ -22,7 +22,7 @@ def day5_part1(L):
 				G[j][i] += 1
 	return sum([sum([1 for i in row if i > 1]) for row in G])
 
-def day5_part2(L):
+def day05_part2(L):
 	N = max([max(line) for line in L]) + 1 #len of grid
 	G = [[0] * N for i in range(N)] #because mutability
 	for line in L:
@@ -45,5 +45,5 @@ def day5_part2(L):
 				G[j][i] += 1
 	return sum([sum([1 for i in row if i > 1]) for row in G])
 
-print(day5_part1(L))
-print(day5_part2(L))
+print(day05_part1(L))
+print(day05_part2(L))
