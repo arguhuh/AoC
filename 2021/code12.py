@@ -2,7 +2,7 @@ infile = open("input/in12_real.txt","r")
 # infile = open("input/in12_test.txt","r")
 # infile = open("input/in12_test2.txt","r")
 # infile = open("input/in12_test3.txt","r")
-L = [line.strip().split('-') for line in infile.readlines()]
+L = [line.strip().split('-') for line in infile]
 
 def find_paths1(L,pos,visited,ind):
 	if pos == 'end':
@@ -13,8 +13,11 @@ def find_paths1(L,pos,visited,ind):
 		elif visited[ind[pos]] == 1:
 			return 0
 		npaths = 0
-		for newpos in [p if q==pos else q for p,q in [[a,b] for a,b in L if a==pos or b==pos]]:
-			npaths += find_paths1(L,newpos,visited[:],ind)
+		for p,q in L:
+			if q == pos:
+				npaths += find_paths1(L,p,visited[:],ind)
+			elif p == pos:
+				npaths += find_paths1(L,q,visited[:],ind)
 	return npaths
 
 def day12_part1(L):
@@ -55,8 +58,11 @@ def find_paths2(L,pos,visited,ind):
 		elif visited[ind[pos]] == 2:
 			return 0
 		npaths = 0
-		for newpos in [p if q==pos else q for p,q in [[a,b] for a,b in L if a==pos or b==pos]]:
-			npaths += find_paths2(L,newpos,visited[:],ind)
+		for p,q in L:
+			if q == pos:
+				npaths += find_paths2(L,p,visited[:],ind)
+			elif p == pos:
+				npaths += find_paths2(L,q,visited[:],ind)
 	return npaths
 
 def day12_part2(L):
@@ -87,7 +93,7 @@ def day12_part2_OG(L):
 	return npaths[0]
 
 
-# print(day12_part1(L))
-# print(day12_part1_OG(L))
-# print(day12_part2(L))
+print(day12_part1(L))
+print(day12_part1_OG(L))
+print(day12_part2(L))
 print(day12_part2_OG(L))

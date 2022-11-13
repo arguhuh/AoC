@@ -1,6 +1,6 @@
 infile = open("input/in11_real.txt","r")
 # infile = open("input/in11_test.txt","r")
-L = [[int(i) for i in line.strip()] for line in infile.readlines()]
+L = [[int(i) for i in line.strip()] for line in infile]
 
 def step(L):
 	Ni = len(L)
@@ -35,7 +35,3 @@ def day11_part2(L):
 
 print(day11_part1(L[:],100))
 print(day11_part2(L[:]))
-
-# day11_part1(L,100)
-# for row in L:
-	# print(''.join([str(i) for i in row]))
