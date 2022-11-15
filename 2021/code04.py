@@ -1,7 +1,7 @@
 infile = open("input/in04_real.txt","r")
 # infile = open("input/in04_test.txt","r")
 
-when_called = [i for i,j in sorted(enumerate(map(int,next(infile).strip().split(','))), key = lambda p: p[1])]
+when_called = [i for i,_ in sorted(enumerate(map(int,next(infile).strip().split(','))), key = lambda p: p[1])]
 
 boards = []
 for line in infile:
