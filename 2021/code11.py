@@ -23,7 +23,7 @@ def step(L):
 
 def day11_part1(L,Nsteps):
 	Nflash = 0
-	for istep in range(Nsteps):
+	for _ in range(Nsteps):
 		Nflash += step(L)
 	return Nflash
 
