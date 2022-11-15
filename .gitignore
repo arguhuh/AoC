@@ -1,0 +1,4 @@
+# ignore automatically-generated backup files
+*.bak
+# ignore copies for now
+* - Copy.*

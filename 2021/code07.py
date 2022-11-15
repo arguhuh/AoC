@@ -8,7 +8,7 @@ def cost1(L,p):
 def day07_part1(L):
 	C = float("inf")
 	P = float("nan")
-	for p in list(range(min(L),max(L)+1)):
+	for p in range(min(L),max(L)+1):
 		c = cost1(L,p)
 		if c < C:
 			C = c
@@ -22,7 +22,7 @@ def cost2(L,p):
 def day07_part2(L):
 	C = float("inf")
 	P = float("nan")
-	for p in list(range(min(L),max(L)+1)):
+	for p in range(min(L),max(L)+1):
 		c = cost2(L,p)
 		if c < C:
 			C = c

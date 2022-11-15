@@ -27,22 +27,22 @@ def day08_part2(L):
 		"abcdefg": '8',
 		"abcdfg": '9'
 	}
-	L = [[s.split() for s in line.strip().split('|')] for line in L]
 	T = 0
 	for line in L:
+		A,B = map(str.split, line.strip().split('|'))
 		connections = [None] * 7
 		Ndig = [0] * 7
-		for s in line[0]:
+		for s in A:
 			for c in s:
 				Ndig[cv.index(c)] += 1
 		connections[Ndig.index(4)] = 'e'
 		connections[Ndig.index(6)] = 'b'
 		connections[Ndig.index(9)] = 'f'
-		connections[cv.index([c for c in [s for s in line[0] if len(s) == 2][0] if connections[cv.index(c)]==None][0])] = 'c'
-		connections[cv.index([c for c in [s for s in line[0] if len(s) == 3][0] if connections[cv.index(c)]==None][0])] = 'a'
-		connections[cv.index([c for c in [s for s in line[0] if len(s) == 4][0] if connections[cv.index(c)]==None][0])] = 'd'
+		connections[cv.index([c for c in [s for s in A if len(s) == 2][0] if connections[cv.index(c)]==None][0])] = 'c'
+		connections[cv.index([c for c in [s for s in A if len(s) == 3][0] if connections[cv.index(c)]==None][0])] = 'a'
+		connections[cv.index([c for c in [s for s in A if len(s) == 4][0] if connections[cv.index(c)]==None][0])] = 'd'
 		connections[connections.index(None)] = 'g'
-		correct_digits = [[connections[cv.index(c)] for c in s] for s in line[1]]
+		correct_digits = [[connections[cv.index(c)] for c in s] for s in B]
 		T += int(''.join([ss[''.join(sorted(d))] for d in correct_digits]))
 	return T
 

@@ -1,6 +1,6 @@
 infile = open("input/in11_real.txt","r")
 # infile = open("input/in11_test.txt","r")
-L = [[int(i) for i in line.strip()] for line in infile.readlines()]
+L = [[int(i) for i in line.strip()] for line in infile]
 
 def step(L):
 	Ni = len(L)
@@ -23,18 +23,15 @@ def step(L):
 
 def day11_part1(L,Nsteps):
 	Nflash = 0
-	for istep in range(Nsteps):
+	for _ in range(Nsteps):
 		Nflash += step(L)
 	return Nflash
 
 def day11_part2(L):
-	istep = 0
-	while sum([elm for row in L for elm in row]):
+	istep = 1
+	while step(L) != 100:
 		istep += 1
-		step(L)
 	return istep
 
-# print("number of flashes: "+str(day11_part1(L,100)))
-# for row in L:
-	# print(''.join([str(i) for i in row]))
-print(day11_part2(L))
+print(day11_part1(L[:],100))
+print(day11_part2(L[:]))

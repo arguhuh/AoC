@@ -1,7 +1,8 @@
 infile = open("input/in04_real.txt","r")
 # infile = open("input/in04_test.txt","r")
 
-order = [int(i) for i in next(infile).strip().split(',')]
+when_called = [i for i,_ in sorted(enumerate(map(int,next(infile).strip().split(','))), key = lambda p: p[1])]
+
 boards = []
 for line in infile:
 	if line == '\n':
@@ -9,33 +10,26 @@ for line in infile:
 		board = []
 	else:
 		k += 1
-		board.append([int(i) for i in line.split()])
+		board.append([(n,when_called[n]) for n in map(int,line.split())])
 		if k == 5:
 			boards.append(board)
 
-def day04_part1(order,boards):
-	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]
-	q = min(enumerate([min([max([inv_order[i] for i in row]) for row in board + list(zip(*board))]) for board in boards]), key = lambda p: p[1])
-	return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
+def sum_board(board,T):
+	total = 0
+	for row in board:
+		for n,t in row:
+			if t > T:
+				total += n
+	return total
+	# return sum([n for row in board for n,t in row if t > T])
 
-def day04_part2(order,boards):
-	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]
-	q = max(enumerate([min([max([inv_order[i] for i in row]) for row in board + list(zip(*board))]) for board in boards]), key = lambda p: p[1])
-	return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
+def day04_part1(boards):
+	ID, (N, T) = min(enumerate([min([max(row, key = lambda p: p[1]) for row in board + list(zip(*board))], key = lambda p: p[1]) for board in boards]), key = lambda p: p[1][1])
+	return sum_board(boards[ID],T) * N
 
-def day04_part3(order,boards):
-	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]
-	q = min(enumerate([min([max([inv_order[i] for i in row]) for row in board + list(zip(*board)) + [[row[i] for i, row in enumerate(board)], \
-		[row[-i-1] for i, row in enumerate(board)]]]) for board in boards]), key = lambda p: p[1])
-	return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
+def day04_part2(boards):
+	ID, (N, T) = max(enumerate([min([max(row, key = lambda p: p[1]) for row in board + list(zip(*board))], key = lambda p: p[1]) for board in boards]), key = lambda p: p[1][1])
+	return sum_board(boards[ID],T) * N
 
-def day04_part4(order,boards):
-	inv_order = [i for i,j in sorted(enumerate(order), key = lambda p: p[1])]
-	q = max(enumerate([min([max([inv_order[i] for i in row]) for row in board + list(zip(*board)) + [[row[i] for i, row in enumerate(board)], \
-		[row[-i-1] for i, row in enumerate(board)]]]) for board in boards]), key = lambda p: p[1])
-	return sum([sum([i for i in row if inv_order[i] > q[1]]) for row in boards[q[0]]]) * order[q[1]]
-
-print(day04_part1(order,boards))
-print(day04_part2(order,boards))
-print(day04_part3(order,boards))
-print(day04_part4(order,boards))
+print(day04_part1(boards))
+print(day04_part2(boards))

@@ -1,6 +1,6 @@
 infile = open("input/in10_real.txt","r")
 # infile = open("input/in10_test.txt","r")
-L = [[c for c in line.strip()] for line in infile.readlines()]
+L = [list(line.strip()) for line in infile]
 
 def first_illegal(s):
 	type = {"(":"l",")":"r","[":"l","]":"r","{":"l","}":"r","<":"l",">":"r"}
@@ -52,5 +52,5 @@ def day10_part2(L):
 	S = [score_completion(s) for s in C if s != None]
 	return sorted(S)[len(S)//2]
 
-# print(day10_part1(L))
+print(day10_part1(L))
 print(day10_part2(L))

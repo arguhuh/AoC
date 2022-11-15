@@ -1,39 +1,38 @@
-from math import prod
-
-infile = open("input/in02_test.txt","r")
-# infile = open("input/in02_real.txt","r")
-L = [line.split() for line in infile.readlines()]
-L2 = [[p[0],int(p[1])] for p in L]
+infile = open("input/in02_real.txt","r")
+# infile = open("input/in02_test.txt","r")
+L = [line.split() for line in infile]
+L2 = [[dir,int(dist)] for dir,dist in L]
 
 def day02_part1(L):
-    pos = [0, 0]
-    for inst in L:
-        if inst[0] == 'forward':
-            pos[0] += inst[1]
-        elif inst[0] == 'down':
-            pos[1] += inst[1]
-        elif inst[0] == 'up':
-            pos[1] -= inst[1]
-        else:
-            print('invalid instruction')
-            return None
-    return prod(pos)
+	x = y = 0
+	for dir,dist in L:
+		match dir:
+			case 'forward':
+				x += dist
+			case 'down':
+				y += dist
+			case 'up':
+				y -= dist
+			case _:
+				print('invalid instruction')
+				return None
+	return x * y
 
 def day02_part2(L):
-    pos = [0, 0]
-    aim = 0
-    for inst in L:
-        if inst[0] == 'forward':
-            pos[0] += inst[1]
-            pos[1] += inst[1] * aim
-        elif inst[0] == 'down':
-            aim += inst[1]
-        elif inst[0] == 'up':
-            aim -= inst[1]
-        else:
-            print('invalid instruction')
-            return None
-    return prod(pos)
+	x = y = aim = 0
+	for dir,dist in L:
+		match dir:
+			case 'forward':
+				x += dist
+				y += dist * aim
+			case 'down':
+				aim += dist
+			case 'up':
+				aim -= dist
+			case _:
+				print('invalid instruction')
+				return None
+	return x * y
 
 print(day02_part1(L2))
 print(day02_part2(L2))

@@ -2,7 +2,7 @@ import random,math,itertools
 
 infile = open("input/in09_real.txt","r")
 # infile = open("input/in09_test.txt","r")
-L = [[int(i) for i in list(line.strip())] for line in infile.readlines()] #L[i][j] is j-th height in the i-th line
+L = [[int(i) for i in line.strip()] for line in infile] #L[i][j] is j-th height in the i-th line
 
 def day09_part1(L):
 	N = len(L[0])
@@ -128,7 +128,7 @@ def day09_part2_flood(L):
 	return math.prod(sorted(basins)[-3:])
 
 
-# print(day09_part1(L))
+print(day09_part1(L))
 print(day09_part2(L))
 # print(day09_part2_test(L))
 # print(day09_part2_test2(L))
