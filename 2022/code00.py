@@ -5,21 +5,21 @@ for filename in ["input/in##_test.txt", "input/in##_real.txt"]:
 	with open(filename,"r") as infile:
 		L = [line for line in map(str.strip,infile)]
 		
-		# L = list(map(int,map(str.strip,infile)))
+		# L = [i for i in map(int,map(str.strip,infile))]
 		
-		# L = [[i for i in line] for line in map(str.split,infile)]
+		# L = [[elm for elm in line] for line in map(str.split,infile)]
 		
-		# L = [list(map(int,line)) for line in map(str.split,infile)]
+		# L = [[i for i in map(int,line)] for line in map(str.split,infile)]
 		
 		# L = [(a,b) for a,b in map(str.split,infile)]
 		
 		# L = [[line for line in grp.split('\n')] for grp in infile.read().split('\n\n')]
 		
-		# L = [list(map(int,grp.split('\n'))) for grp in infile.read().split('\n\n')]
+		# L = [[i for i in map(int,grp.split('\n'))] for grp in infile.read().split('\n\n')]
 		
-		# L = [[[i for i in line] for line in map(str.split,grp.split('\n'))] for grp in infile.read().split('\n\n')]
+		# L = [[[elm for elm in line] for line in map(str.split,grp.split('\n'))] for grp in infile.read().split('\n\n')]
 		
-		# L = [[list(map(int,line)) for line in map(str.split,grp.split('\n'))] for grp in infile.read().split('\n\n')]
+		# L = [[[i for i in map(int,line)] for line in map(str.split,grp.split('\n'))] for grp in infile.read().split('\n\n')]
 		
 		# L = [[(a,b) for a,b in map(str.split,grp.split('\n'))] for grp in infile.read().split('\n\n')]
 		
