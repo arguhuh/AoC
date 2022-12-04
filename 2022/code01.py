@@ -1,16 +1,9 @@
+import pyperclip
+
 Lboth = []
 for filename in ["input/in01_test.txt", "input/in01_real.txt"]:
 	with open(filename,"r") as infile:
-		L = []
-		row = []
-		for line in map(str.strip,infile):
-			if len(line):
-				row.append(int(line))
-			else:
-				L.append(row)
-				row = []
-		if len(row):
-			L.append(row)
+		L = [list(map(int,grp.split('\n'))) for grp in infile.read().split('\n\n')]
 		Lboth.append(L)
 Ltest, Lreal = Lboth
 
@@ -20,8 +13,19 @@ def day01_part1(L):
 def day01_part2(L):
 	return sum(sorted(sum(row) for row in L)[-3:])
 
-print(day01_part1(Ltest))
-print(day01_part1(Lreal))
-print()
-print(day01_part2(Ltest))
-print(day01_part2(Lreal))
+
+result_test_1 = day01_part1(Ltest)
+result_real_1 = day01_part1(Lreal)
+
+print(result_test_1)
+print(result_real_1)
+pyperclip.copy(result_real_1)
+
+result_test_2 = day01_part2(Ltest)
+result_real_2 = day01_part2(Lreal)
+
+if result_test_2 is not None:
+	print()
+	print(result_test_2)
+	print(result_real_2)
+	pyperclip.copy(result_real_2)
