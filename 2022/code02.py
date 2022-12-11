@@ -1,4 +1,4 @@
-import pyperclip
+from pyperclip import copy as ctrl_C
 
 Lboth = []
 for filename in ["input/in02_test.txt", "input/in02_real.txt"]:
@@ -83,15 +83,21 @@ def day02_part2(L):
 result_test_1 = day02_part1(Ltest)
 result_real_1 = day02_part1(Lreal)
 
-print(result_test_1)
 print(result_real_1)
-pyperclip.copy(result_real_1)
+print(result_test_1)
+try:
+	ctrl_C(result_real_1)
+except:
+	print("cannot copy result")
 
 result_test_2 = day02_part2(Ltest)
 result_real_2 = day02_part2(Lreal)
 
 if result_test_2 is not None:
 	print()
-	print(result_test_2)
 	print(result_real_2)
-	pyperclip.copy(result_real_2)
+	print(result_test_2)
+	try:
+		ctrl_C(result_real_2)
+	except:
+		print("cannot copy result")
