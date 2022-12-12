@@ -1,4 +1,4 @@
-from queue import PriorityQueue
+from queue import PriorityQueue, Empty
 from pyperclip import copy as ctrl_C
 from copy import deepcopy
 
@@ -11,12 +11,15 @@ Ltest, Lreal = Lboth
 
 def dijk(grid,start,crit,neigh,Ni,Nj):
 	unvisited = {(i,j) for i in range(Ni) for j in range(Nj)}
-	dist = [[float("inf") for _ in range(Nj)] for _ in range(Ni)]
+	dist = [[float('inf') for _ in range(Nj)] for _ in range(Ni)]
 	dist[start[0]][start[1]] = 0
 	Q = PriorityQueue()
 	Q.put((0,start))
 	while len(unvisited) > 0:
-		d,(p,q) = Q.get_nowait()
+		try:
+			d,(p,q) = Q.get_nowait()
+		except Empty:
+			return float('inf')
 		if crit(grid,p,q):
 			return d
 		unvisited.remove((p,q))
