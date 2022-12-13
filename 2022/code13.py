@@ -1,3 +1,4 @@
+from json import loads
 from itertools import zip_longest, chain
 from functools import cmp_to_key
 from pyperclip import copy as ctrl_C
@@ -5,7 +6,7 @@ from pyperclip import copy as ctrl_C
 Lboth = []
 for filename in ["input/in13_test.txt", "input/in13_real.txt"]:
 	with open(filename,"r") as infile:
-		L = [list(map(eval,grp.split('\n'))) for grp in infile.read().split('\n\n')]
+		L = [list(map(loads,grp.split('\n'))) for grp in infile.read().split('\n\n')]
 		Lboth.append(L)
 Ltest, Lreal = Lboth
 
