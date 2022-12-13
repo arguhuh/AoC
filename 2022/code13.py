@@ -9,36 +9,34 @@ for filename in ["input/in13_test.txt", "input/in13_real.txt"]:
 		Lboth.append(L)
 Ltest, Lreal = Lboth
 
-def compare(Ls,Rs):
-	for L,R in zip_longest(Ls,Rs):
-		if L is None:
-			return True
-		elif R is None:
-			return False
-		elif isinstance(L,list) and isinstance(R,list):
-			c = compare(L,R)
-			if c is not None:
-				return c
-		elif isinstance(L,list):
-			c = compare(L,[R])
-			if c is not None:
-				return c
-		elif isinstance(R,list):
-			c = compare([L],R)
-			if c is not None:
-				return c
+def compare(L,R):
+	if L is None:
+		return -1
+	elif R is None:
+		return 1
+	elif isinstance(L,int) and isinstance(R,int):
+		if L < R:
+			return -1
+		elif R < L:
+			return 1
 		else:
-			if L < R:
-				return True
-			elif R < L:
-				return False
+			return 0
+	elif isinstance(L,int):
+		L = [L]
+	elif isinstance(R,int):
+		R = [R]
+	
+	for pair in zip_longest(L,R):
+		c = compare(*pair)
+		if c:
+			return c
+	return 0
 
 def day13_part1(L):
-	return sum(i+1 for i,[Ls,Rs] in enumerate(L) if compare(Ls,Rs))
+	return sum(i+1 for i,pair in enumerate(L) if compare(*pair) == -1)
 
 def day13_part2(L):
-	S = sorted(chain(*L, [[[2]], [[6]], [None]]), \
-	key = cmp_to_key(lambda a,b: 1 - (compare(a,b) * 2)))
+	S = sorted(chain(*L, [[[2]], [[6]], None]), key = cmp_to_key(compare))
 	return S.index([[2]]) * S.index([[6]])
 
 
