@@ -45,27 +45,24 @@ def day15_part2(L, maxcoord = 4_000_000):
 		d = abs(xS-xB) + abs(yS-yB)
 		D = abs(Xs-Xb) + abs(Ys-Yb)
 		
-		x2 = (Ys+Xs+D) - (yS-xS+d)
-		x = x2 // 2 # intersection point
-		if x2 % 2 == 0 and x in range(xS-d-1, xS): #NW of 1st intersects NE of 2nd
+		x, between = divmod((Ys+Xs+D) - (yS-xS+d), 2)
+		#intersection point and whether intersection lies between nodes (ie off-grid)
+		if not between and x in range(xS-d-1, xS): #NW of 1st intersects NE of 2nd
 			y = yS-xS+d + x
 			candidates.add((x, y + 1)) #candidate is N of intersection
 		
-		x2 = (Ys+Xs-D) - (yS-xS+d)
-		x = x2 // 2 # intersection point
-		if x2 % 2 == 0 and x in range(xS-d+1, xS+2): #NW of 1st intersects SW of 2nd
+		x, between = divmod((Ys+Xs-D) - (yS-xS+d), 2)
+		if not between and x in range(xS-d+1, xS+2): #NW of 1st intersects SW of 2nd
 			y = yS-xS+d + x
 			candidates.add((x - 1, y)) #candidate is W of intersection
 		
-		x2 = (Ys+Xs+D) - (yS-xS-d)
-		x = x2 // 2 # intersection point
-		if x2 % 2 == 0 and x in range(xS-1, xS+d): #SE of 1st intersects NE of 2nd
+		x, between = divmod((Ys+Xs+D) - (yS-xS-d), 2)
+		if not between and x in range(xS-1, xS+d): #SE of 1st intersects NE of 2nd
 			y = yS-xS-d + x
 			candidates.add((x + 1, y)) #candidate is E of intersection
 		
-		x2 = (Ys+Xs-D) - (yS-xS-d)
-		x = x2 // 2 # intersection point
-		if x2 % 2 == 0 and x in range(xS+1, xS+d+2): #SE of 1st intersects SW of 2nd
+		x, between = divmod((Ys+Xs-D) - (yS-xS-d), 2)
+		if not between and x in range(xS+1, xS+d+2): #SE of 1st intersects SW of 2nd
 			y = yS-xS-d + x
 			candidates.add((x, y - 1)) #candidate is S of intersection
 	
