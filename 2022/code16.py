@@ -1,6 +1,5 @@
-import re, math, functools as ft, itertools as it, more_itertools as mi
+from itertools import permutations
 from queue import PriorityQueue, Empty
-import time
 from pyperclip import copy as ctrl_C
 
 Lboth = []
@@ -74,7 +73,7 @@ def most_pressure2(dist, FR, closed, pos1, pos2, t1, t2, threshold = 0):
 		return 0
 	
 	max_pressure = 0
-	for dest1, dest2 in it.permutations(closed, 2):
+	for dest1, dest2 in permutations(closed, 2):
 		dt1 = dist[pos1][dest1] + 1
 		dt2 = dist[pos2][dest2] + 1
 		if t1 >= dt1 and t2 >= dt2:
