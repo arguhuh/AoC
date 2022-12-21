@@ -6,6 +6,8 @@ for filename in ["input/in##_test.txt", "input/in##_real.txt"]:
 	with open(filename,"r") as infile:
 		L = [line for line in map(str.strip,infile)]
 		
+		# L = [list(map(int,re.sub('[^-0-9]+','@',line).strip('@').split('@'))) for line in map(str.strip,infile)]
+		
 		# L = [i for i in map(int,map(str.strip,infile))]
 		
 		# L = [[elm for elm in line] for line in map(str.split,infile)]
