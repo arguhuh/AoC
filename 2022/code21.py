@@ -1,47 +1,25 @@
+from re import sub
 from pyperclip import copy as ctrl_C
 
 Lboth = []
 for filename in ["input/in21_test.txt", "input/in21_real.txt"]:
 	with open(filename,"r") as infile:
-		L = [(a,b.split() if ' ' in b else int(b)) for a,b in [line.split(': ') for line in map(str.strip,infile)]]
+		L = {a: b.split() if ' ' in b else int(b) for a,b in [sub('/','//',line).split(': ') for line in map(str.strip,infile)]}
 		Lboth.append(L)
 Ltest, Lreal = Lboth
 
 def day21_part1(L):
-	D = dict(L)
-	while any(isinstance(v,list) for v in D.values()):
-		for name, num in D.items():
-			if isinstance(num,list):
-				a, op, b = num
-				if isinstance(D[a],int) and isinstance(D[b],int):
-					match op:
-						case '+':
-							D[name] = D[a] + D[b]
-						case '-':
-							D[name] = D[a] - D[b]
-						case '*':
-							D[name] = D[a] * D[b]
-						case '/':
-							D[name] = D[a] // D[b]
-	return D['root']
+	return compute(*parse(L, 'root', ignore = ''))
 
-def parse(D, expr):
-	if expr == 'D["humn"]':
+def parse(L, expr, ignore = 'humn'):
+	if expr == ignore:
 		return expr
 	
-	res = D[expr[3:-2]]
+	res = L[expr]
 	if isinstance(res,int):
 		return res
 	else:
-		return [parse(D,res[0]), res[1], parse(D,res[2])]
-
-def contains_human(g):
-	if isinstance(g, int):
-		return False
-	elif isinstance(g, str):
-		return True
-	else:
-		return contains_human(g[0]) or contains_human(g[2])
+		return [parse(L,res[0],ignore), res[1], parse(L,res[2],ignore)]
 
 def compute(a, op, b):
 	if isinstance(a, list):
@@ -58,15 +36,21 @@ def compute(a, op, b):
 		case '//':
 			return a // b
 
+def contains_human(g):
+	if isinstance(g, int):
+		return False
+	elif isinstance(g, str):
+		return True
+	else:
+		return contains_human(g[0]) or contains_human(g[2])
+
 def day21_part2(L):
-	D = dict((a,b if isinstance(b,int) else [f'D["{b[0]}"]', b[1] if b[1] != '/' else '//', f'D["{b[2]}"]']) if a != 'root' else (a, [f'D["{b[0]}"]', f'D["{b[2]}"]']) for a,b in L)
-	
-	LHS = parse(D, D['root'][0])
+	LHS = parse(L, L['root'][0])
 	if contains_human(LHS):
-		RHS = compute(*parse(D, D['root'][1]))
+		RHS = compute(*parse(L, L['root'][2]))
 	else:
 		RHS = compute(*LHS)
-		LHS = parse(D, D['root'][1])
+		LHS = parse(L, L['root'][2])
 	#LHS always contains humn, RHS is num
 	
 	a, op, b = LHS
