@@ -1,6 +1,19 @@
 from math import lcm
-from queue import Queue, PriorityQueue, Empty
+from queue import PriorityQueue, Empty
 from pyperclip import copy as ctrl_C
+
+def step(B, M, N):
+	for b in B:
+		match b[2]:
+			case '>':
+				b[1] = (b[1] + 1) % N
+			case '<':
+				b[1] = (b[1] - 1) % N
+			case 'v':
+				b[0] = (b[0] + 1) % M
+			case '^':
+				b[0] = (b[0] - 1) % M
+	return B
 
 Lboth = []
 for filename in ["input/in24_test.txt", "input/in24_real.txt"]:
@@ -9,26 +22,29 @@ for filename in ["input/in24_test.txt", "input/in24_real.txt"]:
 		M = len(lines) - 2
 		N = len(lines[0]) - 2
 		B = [[i - 1, j - 1, c] for i,line in enumerate(lines) for j,c in enumerate(line) if c not in '.#']
-		L = B, M, N
+		
+		cycle = lcm(M,N)
+		occupied = [{(i,j) for i,j,_ in B}] + [{(i,j) for i,j,_ in step(B,M,N)} for _ in range(cycle-1)]
+		
+		L = occupied, M, N
 		Lboth.append(L)
 Ltest, Lreal = Lboth
 
-def dijk(B, M, N, start, end, d0 = 0):
+def dijk(occupied, M, N, start, end, d0 = 0):
 	cycle = lcm(M,N)
 	t0 = d0 % cycle
 	
-	max_MD = -1
 	dist = {}
 	dist[(*start, t0)] = d0
 	Q = PriorityQueue()
 	Q.put((d0, (*start, t0)))
 	freedict = {}
+	for t in range(cycle):
+		freedict[(*start, t)] = True
+		freedict[(*end, t)] = True
 	while True:
 		try:
 			d, (i, j, t) = Q.get_nowait()
-			if abs(i-start[0]) + abs(j-start[1]) > max_MD:
-				max_MD = abs(i-start[0]) + abs(j-start[1])
-				print(i, j, d)
 		except Empty:
 			return float('inf')
 		if (i, j) == end:
@@ -38,57 +54,25 @@ def dijk(B, M, N, start, end, d0 = 0):
 		tp = (t + 1) % cycle
 		
 		neighs = set()
-		
-		state = (i, j, tp)
-		if state not in freedict:
-			freedict[state] = is_free(*state, B, M, N, cycle)
-		if freedict[state]:
-			neighs.add(state)
-		
-		state = (i+1, j, tp)
-		if state not in freedict:
-			freedict[state] = is_free(*state, B, M, N, cycle)
-		if freedict[state]:
-			neighs.add(state)
-		
-		state = (i-1, j, tp)
-		if state not in freedict:
-			freedict[state] = is_free(*state, B, M, N, cycle)
-		if freedict[state]:
-			neighs.add(state)
-		
-		state = (i, j+1, tp)
-		if state not in freedict:
-			freedict[state] = is_free(*state, B, M, N, cycle)
-		if freedict[state]:
-			neighs.add(state)
-		
-		state = (i, j-1, tp)
-		if state not in freedict:
-			freedict[state] = is_free(*state, B, M, N, cycle)
-		if freedict[state]:
-			neighs.add(state)
+		for pos in [(i, j), (i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
+			state = (*pos, tp)
+			if state not in freedict:
+				freedict[state] = 0 <= state[0] < M and 0 <= state[1] < N \
+				and pos not in occupied[tp]
+			if freedict[state]:
+				neighs.add(state)
 		
 		for dest in neighs:
 			if dest not in dist or dp < dist[dest]:
 				dist[dest] = dp
 				Q.put((dp, dest))
 
-def is_free(i, j, t, B, M, N, cycle):
-	if (i, j) in [(-1, 0), (M, N-1)]:
-		return True
-	elif not (0 <= i < M and 0 <= j < N):
-		return False
-	else:
-		return not ( [(i - t) % M, j, 'v'] in B or [(i + t) % M, j, '^'] in B \
-		or [i, (j - t) % N, '>'] in B or [i, (j + t) % N, '<'] in B )
+def day24_part1(occupied, M, N):
+	return dijk(occupied, M, N, (-1, 0), (M, N-1))
 
-def day24_part1(B, M, N):
-	return dijk(B, M, N, (-1, 0), (M, N-1))
-
-def day24_part2(B, M, N, d0):
-	return dijk(B, M, N, (-1, 0), (M, N-1), d0 = \
-	dijk(B, M, N, (M, N-1), (-1, 0), d0 = d0))
+def day24_part2(occupied, M, N, d0):
+	return dijk(occupied, M, N, (-1, 0), (M, N-1), d0 = \
+	dijk(occupied, M, N, (M, N-1), (-1, 0), d0 = d0))
 
 result_test_1 = day24_part1(*Ltest)
 result_real_1 = day24_part1(*Lreal)
