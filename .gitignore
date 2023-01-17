@@ -2,3 +2,5 @@
 *.bak
 # ignore copies for now
 * - Copy.*
+# ignore input files
+**/input
